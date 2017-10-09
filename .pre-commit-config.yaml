@@ -1,0 +1,16 @@
+repos:
+  - repo: https://github.com/prettier/prettier
+    sha: '1.7.4'  # Use the sha or tag you want to point at
+    hooks:
+    - id: prettier
+      exclude: ^(package.json|package-lock.json|index.html)$
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    sha: 'v4.8.0'  # Use the sha you want to point at
+    hooks:
+    - id: eslint
+      additional_dependencies:
+        - 'eslint'
+        - 'eslint-plugin-node'
+        - 'eslint-plugin-import'
+        - 'eslint-plugin-prettier'
+      args: [--fix]

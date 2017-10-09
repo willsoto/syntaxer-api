@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
     "dev": "nodemon --inspect src/index.js",
-    "lint": "eslint src"
+    "lint": "eslint src --fix"
   },
   "keywords": [],
   "author": "Will Soto <will.soto9+github@gmail.com> (https://github.com/willsoto)",
@@ -17,7 +17,6 @@
     "npm": ">=5.4.0"
   },
   "dependencies": {
-    "eslint-plugin-node": "^5.1.1",
     "express": "^4.15.5",
     "first-mate": "^7.0.9",
     "language-babel": "git://github.com/gandm/language-babel.git",
@@ -31,6 +30,8 @@
     "babel-eslint": "^8.0.1",
     "eslint": "^4.7.2",
     "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-prettier": "^2.3.1",
     "nodemon": "^1.12.1",
     "prettier": "^1.7.0"
   }
