@@ -9,7 +9,8 @@
     "dev": "nodemon --inspect src/index.js",
     "lint": "eslint src --fix",
     "prerelease": "npm run lint",
-    "release": "standard-version --message 'chore(release): %s [no ci]'"
+    "release": "standard-version --message 'chore(release): %s [no ci]'",
+    "postrelease": "git push --follow-tags origin master"
   },
   "keywords": [],
   "author": "Will Soto <will.soto9+github@gmail.com> (https://github.com/willsoto)",
