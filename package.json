@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
+    "dev": "nodemon --inspect src/index.js",
     "lint": "eslint src"
   },
   "keywords": [],
@@ -17,14 +17,15 @@
     "npm": ">=5.4.0"
   },
   "dependencies": {
-    "cson": "^4.1.0",
     "eslint-plugin-node": "^5.1.1",
     "express": "^4.15.5",
     "first-mate": "^7.0.9",
     "language-babel": "git://github.com/gandm/language-babel.git",
     "language-javascript": "git://github.com/atom/language-javascript.git",
+    "less": "^2.7.2",
     "lodash": "^4.17.4",
-    "morgan": "^1.8.2"
+    "morgan": "^1.8.2",
+    "nodegit": "^0.20.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.1",
