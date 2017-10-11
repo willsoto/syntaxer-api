@@ -21,13 +21,15 @@
   },
   "dependencies": {
     "express": "^4.15.5",
+    "express-winston": "^2.4.0",
     "first-mate": "^7.0.9",
     "language-babel": "git://github.com/gandm/language-babel.git",
     "language-javascript": "git://github.com/atom/language-javascript.git",
     "less": "^2.7.2",
     "lodash": "^4.17.4",
-    "morgan": "^1.8.2",
-    "nodegit": "^0.20.2"
+    "morgan": "^1.9.0",
+    "nodegit": "^0.20.2",
+    "winston": "^3.0.0-rc0"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.1",
