@@ -1,3 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    app: syntaxer-api
+    tier: backend
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+  selector:
+    app: syntaxer-api
+    tier: backend
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -17,15 +32,13 @@ spec:
       containers:
       - name: syntaxer-api
         image: us.gcr.io/syntaxer-182400/syntaxer-api:latest
-        args:
-        - npm
-        - start
+        command: ["npm", "start"]
         livenessProbe:
           httpGet:
             path: /api/health-check
             port: 8080
           initialDelaySeconds: 3
-          periodSeconds: 3
+          periodSeconds: 5
         resources:
           requests:
             cpu: 100m
