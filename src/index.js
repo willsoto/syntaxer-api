@@ -32,6 +32,8 @@ app.use('/api/health-check', function(req, res) {
 });
 
 app.listen(PORT, function() {
-  // eslint-disable-next-line no-console
-  console.log('Listening on :3000');
+  logger.log({
+    level: 'info',
+    message: `Server started on ${PORT}`
+  });
 });

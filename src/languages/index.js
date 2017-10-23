@@ -1,10 +1,10 @@
 const express = require('express');
-const { ScopeSelector } = require('first-mate');
 
 const router = express.Router();
 
 const languages = {
-  babel: require('./babel')
+  babel: require('./babel'),
+  javascript: require('./javascript')
 };
 
 router.get('/:language', function(req, res) {
@@ -16,23 +16,10 @@ router.get('/:language', function(req, res) {
     });
   }
 
-  const tokenized = languages[language];
+  const tokens = languages[language];
 
   res.json({
-    tokenized: tokenized.map(line => {
-      return line.map(token => {
-        return {
-          ...token,
-          selectors: token.scopes.map(scope =>
-            new ScopeSelector(scope)
-              .toCssSyntaxSelector()
-              .split('.')
-              .join(' ')
-              .trim()
-          )
-        };
-      });
-    })
+    tokens: tokens
   });
 });
 

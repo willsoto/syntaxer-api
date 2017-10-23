@@ -1,0 +1,11 @@
+import Vue from 'vue';
+
+class Foo extends Bar {
+  constructor(something) {
+    this.something = something;
+  }
+}
+
+export {
+  Foo
+};
