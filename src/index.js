@@ -1,12 +1,14 @@
 const express = require('express');
 const morgan = require('morgan');
 const expressWinston = require('express-winston');
+const { register, collectDefaultMetrics } = require('prom-client');
 
 const version = require('../package.json').version;
 
 const logger = require('./logger');
 
 const app = express();
+collectDefaultMetrics();
 
 const PORT = process.env.PORT || 3000;
 
@@ -29,6 +31,10 @@ app.use('/api/health-check', function(req, res) {
     status: 'healthy',
     version: version
   });
+});
+
+app.use('/api/metrics', function(req, res) {
+  res.end(register.metrics());
 });
 
 app.listen(PORT, function() {
