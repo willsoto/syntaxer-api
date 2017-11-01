@@ -8,6 +8,6 @@ ENV PORT 8080
 ADD . $APP_DIR
 WORKDIR $APP_DIR
 
-RUN ["npm", "install"]
+RUN ["yarn", "--frozen-lockfile", "--non-interactive"]
 
 EXPOSE $PORT
