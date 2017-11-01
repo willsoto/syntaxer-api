@@ -33,7 +33,6 @@ spec:
       containers:
       - name: syntaxer-api
         image: us.gcr.io/syntaxer-182400/syntaxer-api:latest
-        command: ["yarn", "start"]
         livenessProbe:
           httpGet:
             path: /api/health-check

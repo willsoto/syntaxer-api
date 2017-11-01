@@ -11,3 +11,5 @@ WORKDIR $APP_DIR
 RUN ["yarn", "--frozen-lockfile", "--non-interactive"]
 
 EXPOSE $PORT
+
+CMD ["yarn", "start"]
