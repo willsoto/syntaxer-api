@@ -10,7 +10,10 @@ const logger = require('./logger');
 const app = express();
 collectDefaultMetrics();
 
-const PORT = process.env.PORT || 3000;
+const serverOpts = {
+  port: process.env.PORT || 3000,
+  hostname: process.env.HOSTNAME || '0.0.0.0'
+};
 
 if (process.env.NODE_ENV === 'production') {
   app.use(
@@ -37,9 +40,9 @@ app.use('/api/metrics', function(req, res) {
   res.end(register.metrics());
 });
 
-app.listen(PORT, function() {
+app.listen(serverOpts.port, serverOpts.hostname, function() {
   logger.log({
     level: 'info',
-    message: `Server started on ${PORT}`
+    message: `Server started on ${serverOpts.hostname}:${serverOpts.port}`
   });
 });
