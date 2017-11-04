@@ -1,2 +1,6 @@
 node_modules
-/gcr-pull.json
+gcr-pull.json
+tmp
+log
+chart
+kubernetes
