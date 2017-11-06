@@ -1,29 +1,16 @@
-apiVersion: v1
-kind: Service
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
   name: syntaxer-api
   labels:
     app: syntaxer-api
     tier: backend
 spec:
-  type: LoadBalancer
-  ports:
-  - name: web
-    port: 8080
-  selector:
-    app: syntaxer-api
-    tier: backend
----
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: syntaxer-api
-spec:
+  replicas: 3
   selector:
     matchLabels:
       app: syntaxer-api
       tier: backend
-  replicas: 3
   template:
     metadata:
       labels:
@@ -33,27 +20,54 @@ spec:
       containers:
       - name: syntaxer-api
         image: us.gcr.io/syntaxer-182400/syntaxer-api:latest
+        ports:
+        - containerPort: 8080
         livenessProbe:
-          httpGet:
-            path: /api/health-check
+          tcpSocket:
             port: 8080
-          initialDelaySeconds: 3
-          periodSeconds: 5
+          initialDelaySeconds: 180
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 10
         resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
           requests:
             cpu: 100m
-            memory: 100Mi
-        env:
-        - name: GET_HOSTS_FROM
-          value: dns
-          # Using `GET_HOSTS_FROM=dns` requires your cluster to
-          # provide a dns service. As of Kubernetes 1.3, DNS is a built-in
-          # service launched automatically. However, if the cluster you are using
-          # does not have a built-in DNS service, you can instead
-          # instead access an environment variable to find the master
-          # service's host. To do so, comment out the 'value: dns' line above, and
-          # uncomment the line below:
-          # value: env
-        ports:
-        - name: web
-          containerPort: 8080
+            memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: syntaxer-api
+  labels:
+    app: syntaxer-api
+    tier: backend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: node
+  selector:
+    app: syntaxer-api
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: syntaxer-api
+  labels:
+    app: syntaxer-api
+    tier: backend
+spec:
+  rules:
+  - host: syntaxer-api.k8s.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: syntaxer-api
+          servicePort: 8080
