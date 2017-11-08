@@ -36,7 +36,7 @@ app.use('/api/health-check', function(req, res) {
   });
 });
 
-app.use('/api/metrics', function(req, res) {
+app.use('/metrics', function(req, res) {
   res.end(register.metrics());
 });
 
