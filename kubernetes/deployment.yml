@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: syntaxer-api
-        image: us.gcr.io/syntaxer-182400/syntaxer-api:latest
+        image: us.gcr.io/syntaxer-182400/syntaxer-api:65f8a5b5f9ca2d37cee1f5cb814ad66276e747aa
         ports:
         - containerPort: 8080
         livenessProbe:
