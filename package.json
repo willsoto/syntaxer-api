@@ -20,6 +20,8 @@
     "npm": ">=5.4.0"
   },
   "dependencies": {
+    "cors": "^2.8.4",
+    "epimetheus": "^1.0.55",
     "express": "^4.16.2",
     "express-winston": "^2.4.0",
     "first-mate": "^7.0.9",
@@ -49,8 +51,9 @@
   },
   "nodemonConfig": {
     "ignore": [
-      "tmp/*",
-      "kubernetes/*"
+      "kubernetes/*",
+      "log/*",
+      "tmp/*"
     ]
   }
 }

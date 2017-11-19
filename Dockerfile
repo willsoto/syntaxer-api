@@ -1,16 +1,13 @@
-FROM node:8
+FROM node:9
 
 ENV NPM_CONFIG_LOGLEVEL warn
 ENV APP_DIR /app
-ENV NODE_ENV production
-ENV PORT 8080
-ENV HOSTNAME 0.0.0.0
 
 ADD . $APP_DIR
 WORKDIR $APP_DIR
 
 RUN ["yarn", "--frozen-lockfile", "--non-interactive"]
 
-EXPOSE $PORT
+ENV NODE_ENV production
 
 CMD ["yarn", "start"]

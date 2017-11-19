@@ -1,18 +1,24 @@
 const express = require('express');
+const cors = require('cors');
 const morgan = require('morgan');
 const expressWinston = require('express-winston');
-const { register, collectDefaultMetrics } = require('prom-client');
+const epimetheus = require('epimetheus');
 
-const version = require('../package.json').version;
+const pkg = require('../package.json');
 
 const logger = require('./logger');
 
 const app = express();
-collectDefaultMetrics();
+
+app.use(cors());
+// Enable pre-flight OPTIONS
+app.options('*', cors());
+
+// Prometheus metrics
+epimetheus.instrument(app);
 
 const serverOpts = {
-  port: process.env.PORT || 8080,
-  hostname: process.env.HOSTNAME || '0.0.0.0'
+  port: process.env.PORT || 8080
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -29,20 +35,16 @@ if (process.env.NODE_ENV === 'production') {
 app.use('/api/languages', require('./languages'));
 app.use('/api/syntax-themes', require('./syntax-themes'));
 
-app.use('/api/health-check', function(req, res) {
+app.use('/health-check', function(req, res) {
   return res.json({
     status: 'healthy',
-    version: version
+    version: pkg.version
   });
 });
 
-app.use('/metrics', function(req, res) {
-  res.end(register.metrics());
-});
-
-app.listen(serverOpts.port, serverOpts.hostname, function() {
+app.listen(serverOpts.port, function() {
   logger.log({
     level: 'info',
-    message: `Server started on ${serverOpts.hostname}:${serverOpts.port}`
+    message: `Server started at http://localhost:${serverOpts.port}`
   });
 });
