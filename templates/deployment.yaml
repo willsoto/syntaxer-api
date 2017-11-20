@@ -21,6 +21,7 @@ spec:
       - name: {{ .Chart.Name }}
         # image: us.gcr.io/syntaxer-182400/{{ .Chart.Name }}:65f8a5b5f9ca2d37cee1f5cb814ad66276e747aa
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
         livenessProbe:
