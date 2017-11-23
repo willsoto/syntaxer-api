@@ -3,14 +3,16 @@ kind: Service
 metadata:
   name: {{ .Chart.Name }}
   labels:
-    app: {{ .Chart.Name }}
+    app: {{ template "name" . }}
     tier: backend
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   type: ClusterIP
   ports:
-  - port: 8080
-    targetPort: 8080
+  - port: {{ .Values.app.port }}
+    targetPort: {{ .Values.app.port }}
     protocol: TCP
     name: node
   selector:
-    app: {{ .Chart.Name }}
+    app: {{ template "name" . }}

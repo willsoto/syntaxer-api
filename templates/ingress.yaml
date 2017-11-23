@@ -3,8 +3,10 @@ kind: Ingress
 metadata:
   name: {{ .Chart.Name }}
   labels:
-    app: {{ .Chart.Name }}
+    app: {{ template "name" . }}
     tier: backend
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   rules:
   - host: {{ .Chart.Name }}.k8s.local
@@ -13,4 +15,4 @@ spec:
       - path: /
         backend:
           serviceName: {{ .Chart.Name }}
-          servicePort: 8080
+          servicePort: {{ .Values.app.port }}

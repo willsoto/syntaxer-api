@@ -4,3 +4,6 @@ registry:
 image:
   repository: "willsoto/syntaxer_api"
   tag: "latest"
+
+app:
+  port: "8080"

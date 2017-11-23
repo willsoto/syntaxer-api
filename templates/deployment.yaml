@@ -3,18 +3,20 @@ kind: Deployment
 metadata:
   name: {{ .Chart.Name }}
   labels:
-    app: {{ .Chart.Name }}
+    app: {{ template "name" . }}
     tier: backend
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}
+      app: {{ template "name" . }}
       tier: backend
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}
+        app: {{ template "name" . }}
         tier: backend
     spec:
       containers:
@@ -24,12 +26,12 @@ spec:
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 8080
+        - containerPort: {{ .Values.app.port }}
         livenessProbe:
           tcpSocket:
-            port: 8080
+            port: {{ .Values.app.port }}
           initialDelaySeconds: 180
         readinessProbe:
           tcpSocket:
-            port: 8080
+            port: {{ .Values.app.port }}
           initialDelaySeconds: 10
